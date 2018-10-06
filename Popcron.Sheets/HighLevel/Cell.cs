@@ -5,6 +5,9 @@ namespace Popcron.Sheets
     [Serializable]
     public class Cell
     {
+        /// <summary>  
+        /// Short hand for creating an invalid cell.  
+        /// </summary>
         public static Cell Empty
         {
             get
@@ -13,6 +16,9 @@ namespace Popcron.Sheets
             }
         }
 
+        /// <summary>  
+        /// Checks if the cell is empty.  
+        /// </summary>
         public bool IsEmpty
         {
             get
@@ -21,6 +27,9 @@ namespace Popcron.Sheets
             }
         }
 
+        /// <summary>  
+        /// Returns the formatted value of this cell.  
+        /// </summary>
         public string Value
         {
             get
@@ -36,6 +45,9 @@ namespace Popcron.Sheets
             }
         }
 
+        /// <summary>  
+        /// Returns the effective value of this cell.  
+        /// </summary>
         public ExtendedValue ExtendedValue
         {
             get

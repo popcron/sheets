@@ -29,26 +29,36 @@ namespace Popcron.Sheets
             return JsonUtility.ToJson(data);
         }
 
+        /// <summary>  
+        /// Returns a high level representation of a spreadsheet.  
+        /// </summary>
         public async Task<Spreadsheet> Get()
         {
-            var raw = await Get(true);
+            var raw = await GetRaw(true);
             Spreadsheet spreadsheet = new Spreadsheet(raw);
             return spreadsheet;
         }
 
-        public async Task<SpreadsheetRaw> Get(bool includeGridData = false)
+        /// <summary>  
+        /// Returns the raw data that is contingent to the Google Sheets API.  
+        /// </summary>
+        public async Task<SpreadsheetRaw> GetRaw(bool includeGridData = false)
         {
             string address = "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}?key={key}&includeGridData=" + includeGridData.ToString().ToLower();
             address = address.Replace("{spreadsheetId}", spreadsheetId);
             address = address.Replace("{key}", apiKey);
 
-            WebClient webClient = new WebClient();
-            string data = await webClient.DownloadStringTaskAsync(address);
-
-            SpreadsheetRaw spreadsheet = DeserializeObject<SpreadsheetRaw>(data);
-            return spreadsheet;
+            using (WebClient webClient = new WebClient())
+            {
+                string data = await webClient.DownloadStringTaskAsync(address);
+                SpreadsheetRaw spreadsheet = DeserializeObject<SpreadsheetRaw>(data);
+                return spreadsheet;
+            }
         }
-        
+
+        /// <summary>  
+        /// Creates a spreadsheet, returning the newly created spreadsheet.  
+        /// </summary>
         public async Task<SpreadsheetRaw> Create(SpreadsheetRaw spreadsheet)
         {
             string address = "https://sheets.googleapis.com/v4/spreadsheets?key={key}";
@@ -56,13 +66,18 @@ namespace Popcron.Sheets
 
             string data = SerializeObject(spreadsheet);
 
-            WebClient webClient = new WebClient();
-            webClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-            string response = await webClient.UploadStringTaskAsync(address, data);
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                string response = await webClient.UploadStringTaskAsync(address, data);
 
-            return DeserializeObject<SpreadsheetRaw>(response);
+                return DeserializeObject<SpreadsheetRaw>(response);
+            }
         }
 
+        /// <summary>  
+        /// Applies one or more updates to the spreadsheet.  
+        /// </summary>
         public async Task<RequestBatchUpdateResponse> BatchUpdate(Request request)
         {
             string address = "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:batchUpdate?key={key}";
@@ -71,11 +86,13 @@ namespace Popcron.Sheets
 
             string data = SerializeObject(request);
 
-            WebClient webClient = new WebClient();
-            webClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-            string response = await webClient.UploadStringTaskAsync(address, data);
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                string response = await webClient.UploadStringTaskAsync(address, data);
 
-            return DeserializeObject<RequestBatchUpdateResponse>(response);
+                return DeserializeObject<RequestBatchUpdateResponse>(response);
+            }
         }
     }
 }

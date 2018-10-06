@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Popcron.Sheets
 {
     [Serializable]
     public class Spreadsheet
     {
+        /// <summary>  
+        /// Returns all of the sheets inside this spreadsheet.  
+        /// </summary> 
         public List<Sheet> Sheets
         {
             get
@@ -14,6 +18,9 @@ namespace Popcron.Sheets
             }
         }
 
+        /// <summary>  
+        /// Returns the spreadsheetId.  
+        /// </summary> 
         public string ID
         {
             get
@@ -22,6 +29,9 @@ namespace Popcron.Sheets
             }
         }
 
+        /// <summary>  
+        /// Returns the title of the spreadsheet.  
+        /// </summary>
         public string Title
         {
             get
@@ -30,6 +40,9 @@ namespace Popcron.Sheets
             }
         }
 
+        /// <summary>  
+        /// Returns the link the access this spreadsheet from a browser.  
+        /// </summary>
         public string URL
         {
             get
@@ -50,6 +63,17 @@ namespace Popcron.Sheets
                 Sheet sheet = new Sheet(raw.sheets[i]);
                 sheets.Add(sheet);
             }
+        }
+
+        /// <summary>  
+        /// Returns a high level representation of a spreadsheet.  
+        /// </summary>
+        public static async Task<Spreadsheet> Get(string spreadsheetId, string token)
+        {
+            SheetsClient client = new SheetsClient(spreadsheetId, token);
+            Spreadsheet spreadsheet = await client.Get();
+
+            return spreadsheet;
         }
     }
 }

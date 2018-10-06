@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Popcron.Sheets
 {
@@ -11,5 +12,16 @@ namespace Popcron.Sheets
         public NamedRange[] namedRanges;
         public string spreadsheetUrl;
         public DeveloperMetadata[] developerMetadata;
+
+        /// <summary>  
+        /// Returns the raw data that is contingent to the Google Sheets API.  
+        /// </summary>
+        public static async Task<SpreadsheetRaw> Get(string spreadsheetId, string token, bool includeGridData = false)
+        {
+            SheetsClient client = new SheetsClient(spreadsheetId, token);
+            SpreadsheetRaw raw = await client.GetRaw(includeGridData);
+
+            return raw;
+        }
     }
 }

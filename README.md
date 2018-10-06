@@ -38,8 +38,18 @@ public async void Start()
 If you'd like to use the low level API, you can use the `GetRaw()` method instead of `Get()`. The raw method alternative will out `SpreadsheetRaw` which is identical to the Google API reference.
 
 ## FAQ
-- Does the BatchUpdate method work? A: Untested, I don't know.
-- What about the Create method? A: Untested.
-- What works? A: The Get method, and most of the high level and low level api.
-- GetRaw doesn't return any grid data!! A: Use the hidden `includeGridData` parameter.
-- I'm using the low level API and I don't know what X does? A: Look at the Google Sheets API, because neither do I.
+- Does the BatchUpdate method work?
+
+    Untested, I don't know.
+- What about the Create method?
+
+    Untested.
+- What works?
+
+    The Get method, and most of the high level and low level api.
+- GetRaw doesn't return any grid data!!
+
+    Use the hidden `includeGridData` parameter.
+- I'm using the low level API and I don't know what X does?
+
+    Look at the Google Sheets API, because neither do I.

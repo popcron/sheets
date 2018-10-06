@@ -10,14 +10,12 @@ There is also a smaller high level layer on top, which is useful for people who 
 This exists so that I could use it in my games. Taking the dll an adding it to your plugins folder will work out of the box.
 To remove this dependency, the SheetsClient contains two methods for serializing and deserializing json data. These methods can be rewritten to use any other JSON API, like Newtonsoft.Json.
 
-## High level API
+## Example
 The requirements to using the Google Sheets API, is to have the spreadsheetId and an access token. The spreadsheetId can be retrieved from a url.
 
 `https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}`
 
 The API token can be created from the Google API Console, for more info on this, visit [this article by google](https://cloud.google.com/docs/authentication/api-keys)
-
-For both the low level and high level, a `SheetsClient` instance is needed, this is in the `Popcron.Sheets` namespace. The constructor takes the spreadsheetId and the access token.
 
 ```cs
 public async void Start()
@@ -47,8 +45,11 @@ If you'd like to use the low level API, you can use the `GetRaw()` method instea
 If you want to work with both the low level and high level, you can create a raw spreadsheet from the high level spreadsheet by passing it into the constructor. The same can be done for converting a raw sheet to a high level sheet. This can not be done the other way around, and its by design.
 
 ```cs
-SpreadsheetRaw raw = await GetRaw(true);
-Spreadsheet spreadsheet = new Spreadsheet(raw);
+SpreadsheetRaw raw = await SpreadsheetRaw.Get(spreadsheetId, token, includeGridData);
+Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token);
+
+//create a new spreadsheet from the raw data
+Spreadsheet spreadsheetConverted = new Spreadsheet(raw);
 ```
 
 ## FAQ

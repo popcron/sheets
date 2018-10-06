@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Popcron.Sheets", "Popcron.Sheets\Popcron.Sheets.csproj", "{C16DECA7-0A86-4285-9B3A-99DFD499B4FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C16DECA7-0A86-4285-9B3A-99DFD499B4FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C16DECA7-0A86-4285-9B3A-99DFD499B4FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C16DECA7-0A86-4285-9B3A-99DFD499B4FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C16DECA7-0A86-4285-9B3A-99DFD499B4FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {68461E18-17E5-4349-B15A-6EF65EEE90E3}
+	EndGlobalSection
+EndGlobal

@@ -55,6 +55,12 @@ Spreadsheet spreadsheetConverted = new Spreadsheet(raw);
 ```
 
 ## FAQ
+- How do I add this to my unity project?
+
+    Download the dll file from the releases, and place it in your Plugins folder.
+- What namespace is it under?
+    
+    Popcron.Sheets
 - Is it rows then columns, or columns then rows?
 
     No.

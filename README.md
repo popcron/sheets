@@ -55,30 +55,27 @@ Spreadsheet spreadsheetConverted = new Spreadsheet(raw);
 ```
 
 ## FAQ
-- How do I add this to my unity project?
-
-    Download the dll file from the releases, and place it in your Plugins folder.
-- What namespace is it under?
-    
-    Popcron.Sheets
-- Is it rows then columns, or columns then rows?
-
-    No.
-- Is there XML documentation?
-
-    Yes.
-- Does the BatchUpdate method work?
-
-    Untested, I don't know.
-- What about the Create method?
-
-    Untested.
-- What works?
-
-    The Get method, and most of the high level and low level api.
-- GetRaw doesn't return any grid data!!
-
-    Use the hidden `includeGridData` parameter.
-- I'm using the low level API and I don't know what X does?
-
-    Look at the Google Sheets API, because neither do I.
+- **How do I add this to my unity project?**
+Download the dll file from the releases, and place it in your Plugins folder.
+- **What namespace is it under?**
+ Popcron.Sheets
+- **I got some forbidden exception**
+Ensure that your API key works, and that your spread sheet is accessible publicly.
+- **Is it rows then columns, or columns then rows?**
+No.
+- **Is there XML documentation?**
+ Yes.
+- **Does the BatchUpdate method work?**
+ Untested, I don't know.
+- **What about the Create method?**
+ Untested.
+- **What works?**
+ The Get method, and most of the high level and low level api.
+- **GetRaw doesn't return any grid data!!**
+ Use the hidden `includeGridData` parameter.
+- **I'm using the low level API and I don't know what X does?**
+Look at the Google Sheets API, because neither do I.
+- **Can I send pull requests?**
+Sure.
+- **I got an error**
+Send me the steps to reproduce it and I'll fix it.

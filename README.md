@@ -33,9 +33,12 @@ public async void Start()
     Debug.Log("Columns: " + spreadsheet.Sheets[0].Columns);
     
     Cell[,] data = spreadsheet.Sheets[0].Data;
-    for (int x = 0; x < spreadsheet.Rows; x++)
+    for (int x = 0; x < spreadsheet.Sheets[0].Columns; x++)
     {
-        
+        for (int y = 0; y < spreadsheet.Sheets[0].Rows; y++)
+        {
+            Debug.Log(data[x, y].Value);
+        }
     }
 }
 ```
@@ -50,6 +53,9 @@ Spreadsheet spreadsheet = new Spreadsheet(raw);
 ```
 
 ## FAQ
+- Is it rows then columns, or columns then rows?
+
+    No.
 - Is there XML documentation?
 
     Yes.

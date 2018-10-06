@@ -22,8 +22,8 @@ For both the low level and high level, a `SheetsClient` instance is needed, this
 ```cs
 public async void Start()
 {
-    string spreadsheetId = "";
-    string token = "";
+    string spreadsheetId = ""; //TODO: Get your own spreadsheetId
+    string token = "";         //TODO: Get your own api token
     SheetsClient client = new SheetsClient(spreadsheetId, token);
     Spreadsheet spreadsheet = await client.Get();
 

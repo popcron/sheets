@@ -24,8 +24,7 @@ public async void Start()
 {
     string spreadsheetId = ""; //TODO: Get your own spreadsheetId
     string token = "";         //TODO: Get your own api token
-    SheetsClient client = new SheetsClient(spreadsheetId, token);
-    Spreadsheet spreadsheet = await client.Get();
+    Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token);
 
     Debug.Log("URL: " + spreadsheet.URL);
     Debug.Log("Title: " + spreadsheet.Title);
@@ -42,8 +41,6 @@ public async void Start()
     }
 }
 ```
-
-There are also short hands that allow you to retrieve the data in one line with `Spreadsheet.Get()` and `SpreadsheetRaw.Get()`
 
 If you'd like to use the low level API, you can use the `GetRaw()` method instead of `Get()`. The raw method alternative will out `SpreadsheetRaw` which is identical to the Google API reference.
 

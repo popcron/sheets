@@ -68,9 +68,9 @@ namespace Popcron.Sheets
         /// <summary>  
         /// Returns a high level representation of a spreadsheet.  
         /// </summary>
-        public static async Task<Spreadsheet> Get(string spreadsheetId, string token)
+        public static async Task<Spreadsheet> Get(string spreadsheetId, string token, SheetsSerializer serializer)
         {
-            SheetsClient client = new SheetsClient(spreadsheetId, token);
+            SheetsClient client = new SheetsClient(spreadsheetId, token, serializer);
             Spreadsheet spreadsheet = await client.Get();
 
             return spreadsheet;

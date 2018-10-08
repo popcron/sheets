@@ -3,30 +3,31 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Popcron.Sheets
 {
     [Serializable]
     public class SheetsClient
     {
-        private string spreadsheetId;
-        private string apiKey;
+        private readonly string spreadsheetId;
+        private readonly string apiKey;
+        private SheetsSerializer serializer;
 
-        public SheetsClient(string spreadsheetId, string apiKey)
+        public SheetsClient(string spreadsheetId, string apiKey, SheetsSerializer serializer)
         {
+            this.serializer = serializer ?? throw new Exception("No serializer was given.");
             this.spreadsheetId = spreadsheetId;
             this.apiKey = apiKey;
         }
 
         protected virtual T DeserializeObject<T>(string data)
         {
-            return JsonUtility.FromJson<T>(data);
+            return serializer.DeserializeObject<T>(data);
         }
 
         protected virtual string SerializeObject(object data)
         {
-            return JsonUtility.ToJson(data);
+            return serializer.SerializeObject(data);
         }
 
         /// <summary>  

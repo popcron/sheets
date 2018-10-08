@@ -16,9 +16,9 @@ namespace Popcron.Sheets
         /// <summary>  
         /// Returns the raw data that is contingent to the Google Sheets API.  
         /// </summary>
-        public static async Task<SpreadsheetRaw> Get(string spreadsheetId, string token, bool includeGridData = false)
+        public static async Task<SpreadsheetRaw> Get(string spreadsheetId, string token, SheetsSerializer serializer, bool includeGridData = false)
         {
-            SheetsClient client = new SheetsClient(spreadsheetId, token);
+            SheetsClient client = new SheetsClient(spreadsheetId, token, serializer);
             SpreadsheetRaw raw = await client.GetRaw(includeGridData);
 
             return raw;

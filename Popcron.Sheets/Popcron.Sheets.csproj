@@ -42,13 +42,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\Program Files\Unity\Hub\Editor\2018.2.5f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HighLevel\Cell.cs" />
     <Compile Include="HighLevel\Sheet.cs" />
+    <Compile Include="HighLevel\SheetsSerializer.cs" />
     <Compile Include="HighLevel\Spreadsheet.cs" />
     <Compile Include="Requests\AddBandingRequest.cs" />
     <Compile Include="Responses\AddBandingResponse.cs" />

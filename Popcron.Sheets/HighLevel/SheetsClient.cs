@@ -43,7 +43,7 @@ namespace Popcron.Sheets
         /// <summary>  
         /// Returns the raw data that is contingent to the Google Sheets API.  
         /// </summary>
-        public async Task<SpreadsheetRaw> GetRaw(bool includeGridData = false)
+        public async Task<SpreadsheetRaw> GetRaw(bool includeGridData)
         {
             string address = "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}?key={key}&includeGridData=" + includeGridData.ToString().ToLower();
             address = address.Replace("{spreadsheetId}", spreadsheetId);

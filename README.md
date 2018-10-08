@@ -5,12 +5,11 @@ This is an API that matches the version 4 of [Google's sheets API](https://devel
 There is also a smaller high level layer on top, which is useful for people who just need to access the data from a 2D array.
 
 ## Requirements
-- UnityEngine
 - .NET Framework 4.5
 
-## Removing the UnityEngine.dll dependency
-This exists so that I could use it in my games. Taking the dll an adding it to your plugins folder will work out of the box.
-To remove this dependency, the SheetsClient contains two methods for serializing and deserializing json data. These methods can be rewritten to use any other JSON API, like Newtonsoft.Json.
+## Setting up the serializer
+An abstract SheetsSerializer class exists so that you can use any JSON serializer you'd like. To use it with Unity, create a new class, inherit it from the SheetsSerializer class, implement the deserialize and serialize methods using the `JsonUtility` methods.
+Same would apply for Netwonsoft.Json or any other JSON library.
 
 ## Example
 The requirements to using the Google Sheets API, is to have the spreadsheetId and an access token. The spreadsheetId can be retrieved from a url.
@@ -57,9 +56,11 @@ Spreadsheet spreadsheetConverted = new Spreadsheet(raw);
 ## FAQ
 - **How do I add this to my unity project?**
 Download the dll file from the releases, and place it in your Plugins folder.
-- **What namespace is it under?**
+- **Why can't I do **`new SheetSerializer()`**?**
+Because it is an abstract class, and you have to make your own implementation of this class.
+- **What namespace?**
  Popcron.Sheets
-- **I got some forbidden exception**
+- **I got some kind forbidden exception**
 Ensure that your API key works, and that your spread sheet is accessible publicly.
 - **Is it rows then columns, or columns then rows?**
 No.
@@ -72,7 +73,7 @@ No.
 - **What works?**
  The Get method, and most of the high level and low level api.
 - **GetRaw doesn't return any grid data!!**
- Use the hidden `includeGridData` parameter.
+ Use the optional `includeGridData` parameter.
 - **I'm using the low level API and I don't know what X does?**
 Look at the Google Sheets API, because neither do I.
 - **Can I send pull requests?**

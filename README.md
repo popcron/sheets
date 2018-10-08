@@ -72,8 +72,6 @@ No.
  Untested.
 - **What works?**
  The Get method, and most of the high level and low level api.
-- **GetRaw doesn't return any grid data!!**
- Use the optional `includeGridData` parameter.
 - **I'm using the low level API and I don't know what X does?**
 Look at the Google Sheets API, because neither do I.
 - **Can I send pull requests?**

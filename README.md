@@ -11,6 +11,43 @@ There is also a smaller high level layer on top, which is useful for people who 
 An abstract SheetsSerializer class exists so that you can use any JSON serializer you'd like. To use it with Unity, create a new class, inherit it from the SheetsSerializer class, implement the deserialize and serialize methods using the `JsonUtility` methods.
 Same would apply for Netwonsoft.Json or any other JSON library.
 
+<details>
+    <summary>Unity serializer</summary>
+    
+    ```cs
+    public class JSONSerializer : SheetsSerializer
+    {
+        public override T DeserializeObject<T>(string data)
+        {
+            return JsonUtility.FromJson<T>(data);
+        }
+
+        public override string SerializeObject(object data)
+        {
+            return JsonUtility.ToJson(data);
+        }
+    }
+    ```
+</details>
+
+<details>
+    <summary>Netwonsoft.Json serializer</summary>
+    
+    ```cs
+    public class JSONSerializer : SheetsSerializer
+    {
+        public override T DeserializeObject<T>(string data)
+        {
+            return JsonConvert.DeserializeObject<T>(data);
+        }
+
+        public override string SerializeObject(object data)
+        {
+            return JsonConvert.SerializeObject(data);
+        }
+    }
+    ```
+</details>
 ## Example
 The requirements to using the Google Sheets API, is to have the spreadsheetId and an access token. The spreadsheetId can be retrieved from a url.
 
@@ -23,7 +60,8 @@ public async void Start()
 {
     string spreadsheetId = ""; //TODO: Get your own spreadsheetId
     string token = "";         //TODO: Get your own api token
-    Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token);
+    SheetsSerializer serializer = new SheetsSerializer(); //TODO: Create your own custom serializer/deserializer
+    Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token, serializer);
 
     Debug.Log("URL: " + spreadsheet.URL);
     Debug.Log("Title: " + spreadsheet.Title);

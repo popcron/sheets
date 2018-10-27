@@ -8,13 +8,14 @@ There is also a smaller high level layer on top, which is useful for people who 
 - .NET Framework 4.5
 
 ## Setting up the serializer
-An abstract SheetsSerializer class exists so that you can use any JSON serializer you'd like. To use it with Unity, create a new class, inherit it from the SheetsSerializer class, implement the deserialize and serialize methods using the `JsonUtility` methods.
-Same would apply for Netwonsoft.Json or any other JSON library.
+An abstract SheetsSerializer class exists so that you can use any JSON serializer you'd like.
 
 <details>
     <summary>Unity serializer</summary>
     
 ```cs
+using UnityEngine;
+
 public class JSONSerializer : SheetsSerializer
 {
     public override T DeserializeObject<T>(string data)
@@ -34,6 +35,8 @@ public class JSONSerializer : SheetsSerializer
     <summary>Netwonsoft.Json serializer</summary>
     
 ```cs
+using Newtonsoft.Json;
+
 public class JSONSerializer : SheetsSerializer
 {
     public override T DeserializeObject<T>(string data)

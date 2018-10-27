@@ -69,13 +69,15 @@ public async void Start()
 
     Debug.Log("URL: " + spreadsheet.URL);
     Debug.Log("Title: " + spreadsheet.Title);
-    Debug.Log("Rows: " + spreadsheet.Sheets[0].Rows);
-    Debug.Log("Columns: " + spreadsheet.Sheets[0].Columns);
     
-    Cell[,] data = spreadsheet.Sheets[0].Data;
-    for (int x = 0; x < spreadsheet.Sheets[0].Columns; x++)
+    Sheet sheet = spreadsheet.Sheets[0];
+    Debug.Log("Rows: " + sheet.Rows);
+    Debug.Log("Columns: " + sheet.Columns);
+    
+    Cell[,] data = sheet.Data;
+    for (int x = 0; x < sheet.Columns; x++)
     {
-        for (int y = 0; y < spreadsheet.Sheets[0].Rows; y++)
+        for (int y = 0; y < sheet.Rows; y++)
         {
             Debug.Log(data[x, y].Value);
         }
@@ -88,8 +90,9 @@ If you'd like to use the low level API, you can use the `GetRaw()` method instea
 If you want to work with both the low level and high level, you can create a raw spreadsheet from the high level spreadsheet by passing it into the constructor. The same can be done for converting a raw sheet to a high level sheet. This can not be done the other way around, and its by design.
 
 ```cs
-SpreadsheetRaw raw = await SpreadsheetRaw.Get(spreadsheetId, token, includeGridData);
-Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token);
+SheetsSerializer serializer = new SheetsSerializer();
+SpreadsheetRaw raw = await SpreadsheetRaw.Get(spreadsheetId, token, serializer, includeGridData);
+Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token, serializer);
 
 //create a new spreadsheet from the raw data
 Spreadsheet spreadsheetConverted = new Spreadsheet(raw);
@@ -119,4 +122,4 @@ Look at the Google Sheets API, because neither do I.
 - **Can I send pull requests?**
 Sure.
 - **I got an error**
-Send me the steps to reproduce it and I'll fix it.
+Send me the steps to reproduce it and I'll try to fix it.

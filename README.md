@@ -48,6 +48,7 @@ Same would apply for Netwonsoft.Json or any other JSON library.
     }
     ```
 </details>
+
 ## Example
 The requirements to using the Google Sheets API, is to have the spreadsheetId and an access token. The spreadsheetId can be retrieved from a url.
 

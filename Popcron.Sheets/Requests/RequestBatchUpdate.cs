@@ -11,7 +11,7 @@ namespace Popcron.Sheets
     {
         public Request[] requests = { };
         public bool includeSpreadsheetInResponse;
-        public string[] responseRanges;
+        public string[] responseRanges = { };
         public bool responseIncludeGridData;
     }
 }

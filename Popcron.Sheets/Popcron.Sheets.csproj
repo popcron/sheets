@@ -48,6 +48,9 @@
     <Compile Include="HighLevel\Sheet.cs" />
     <Compile Include="HighLevel\SheetsSerializer.cs" />
     <Compile Include="HighLevel\Spreadsheet.cs" />
+    <Compile Include="OAuth\AuthorizationType.cs" />
+    <Compile Include="OAuth\OAuth.cs" />
+    <Compile Include="OAuth\OAuthToken.cs" />
     <Compile Include="Requests\AddBandingRequest.cs" />
     <Compile Include="Responses\AddBandingResponse.cs" />
     <Compile Include="Requests\AddChartRequest.cs" />
@@ -190,6 +193,7 @@
     <Compile Include="SheetRaw.cs" />
     <Compile Include="SheetProperties.cs" />
     <Compile Include="HighLevel\SheetsClient.cs" />
+    <Compile Include="OAuth\Authorization.cs" />
     <Compile Include="SortSpec.cs" />
     <Compile Include="SpreadsheetRaw.cs" />
     <Compile Include="SpreadsheetProperties.cs" />

@@ -5,7 +5,8 @@ namespace Popcron.Sheets
     [Serializable]
     public class Request
     {
-        public object kind;
+        //public object kind;
+        public AddSheetRequest addSheet;
 
         public void Set(object kind)
         {
@@ -66,7 +67,7 @@ namespace Popcron.Sheets
                 kind.GetType() == typeof(DeleteDimensionGroupRequest) ||
                 kind.GetType() == typeof(UpdateDimensionGroupRequest))
             {
-                this.kind = kind;
+                //this.kind = kind;
             }
             else
             {

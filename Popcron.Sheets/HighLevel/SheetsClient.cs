@@ -10,14 +10,17 @@ namespace Popcron.Sheets
     public class SheetsClient
     {
         private readonly string spreadsheetId;
-        private readonly string apiKey;
+        private readonly Authorization authorization;
         private SheetsSerializer serializer;
 
-        public SheetsClient(string spreadsheetId, string apiKey, SheetsSerializer serializer)
+        public SheetsClient(string spreadsheetId, Authorization authorization, SheetsSerializer serializer = null)
         {
-            this.serializer = serializer ?? throw new Exception("No serializer was given.");
+            if (serializer == null) serializer = SheetsSerializer.Serializer;
+            if (serializer == null) throw new Exception("No serializer was given.");
+
+            this.serializer = serializer;
             this.spreadsheetId = spreadsheetId;
-            this.apiKey = apiKey;
+            this.authorization = authorization;
         }
 
         protected virtual T DeserializeObject<T>(string data)
@@ -45,9 +48,18 @@ namespace Popcron.Sheets
         /// </summary>
         public async Task<SpreadsheetRaw> GetRaw(bool includeGridData)
         {
-            string address = "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}?key={key}&includeGridData=" + includeGridData.ToString().ToLower();
+            string address = "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}?{auth}&includeGridData=" + includeGridData.ToString().ToLower();
             address = address.Replace("{spreadsheetId}", spreadsheetId);
-            address = address.Replace("{key}", apiKey);
+
+            string token = authorization.ToString();
+            if (authorization.Type == AuthorizationType.Key)
+            {
+                address = address.Replace("{auth}", "key=" + token);
+            }
+            else if (authorization.Type == AuthorizationType.AccessToken)
+            {
+                address = address.Replace("{auth}", "accessToken=" + token);
+            }
 
             using (WebClient webClient = new WebClient())
             {
@@ -62,14 +74,23 @@ namespace Popcron.Sheets
         /// </summary>
         public async Task<SpreadsheetRaw> Create(SpreadsheetRaw spreadsheet)
         {
-            string address = "https://sheets.googleapis.com/v4/spreadsheets?key={key}";
-            address = address.Replace("{key}", apiKey);
+            string address = "https://sheets.googleapis.com/v4/spreadsheets?{auth}";
+
+            string token = authorization.ToString();
+            if (authorization.Type == AuthorizationType.Key)
+            {
+                address = address.Replace("{auth}", "key=" + token);
+            }
+            else if (authorization.Type == AuthorizationType.AccessToken)
+            {
+                address = address.Replace("{auth}", "accessToken=" + token);
+            }
 
             string data = SerializeObject(spreadsheet);
 
             using (WebClient webClient = new WebClient())
             {
-                webClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
                 string response = await webClient.UploadStringTaskAsync(address, data);
 
                 return DeserializeObject<SpreadsheetRaw>(response);
@@ -81,17 +102,27 @@ namespace Popcron.Sheets
         /// </summary>
         public async Task<RequestBatchUpdateResponse> BatchUpdate(RequestBatchUpdate request)
         {
-            string address = "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:batchUpdate?key={key}";
+            string address = "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:batchUpdate";
             address = address.Replace("{spreadsheetId}", spreadsheetId);
-            address = address.Replace("{key}", apiKey);
+
+            string token = authorization.ToString();
+            if (authorization.Type == AuthorizationType.Key)
+            {
+                token = "?key=" + token;
+            }
 
             string data = SerializeObject(request);
-
             using (WebClient webClient = new WebClient())
             {
-                webClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                string response = await webClient.UploadStringTaskAsync(address, data);
+                if (authorization.Type == AuthorizationType.AccessToken)
+                {
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + token;
+                }
 
+                webClient.Headers[HttpRequestHeader.Accept] = "application/json";
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                string response = await webClient.UploadStringTaskAsync(address, data);
                 return DeserializeObject<RequestBatchUpdateResponse>(response);
             }
         }

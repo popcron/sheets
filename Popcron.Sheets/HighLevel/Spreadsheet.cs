@@ -68,9 +68,12 @@ namespace Popcron.Sheets
         /// <summary>  
         /// Returns a high level representation of a spreadsheet.  
         /// </summary>
-        public static async Task<Spreadsheet> Get(string spreadsheetId, string token, SheetsSerializer serializer)
+        public static async Task<Spreadsheet> Get(string spreadsheetId, Authorization authorization, SheetsSerializer serializer = null)
         {
-            SheetsClient client = new SheetsClient(spreadsheetId, token, serializer);
+            if (serializer == null) serializer = SheetsSerializer.Serializer;
+            if (serializer == null) throw new Exception("No serializer was given.");
+
+            SheetsClient client = new SheetsClient(spreadsheetId, authorization, serializer);
             Spreadsheet spreadsheet = await client.Get();
 
             return spreadsheet;

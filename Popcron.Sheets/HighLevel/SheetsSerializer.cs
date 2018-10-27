@@ -7,5 +7,7 @@ namespace Popcron.Sheets
     {
         public abstract T DeserializeObject<T>(string data);
         public abstract string SerializeObject(object data);
+
+        public static SheetsSerializer Serializer { get; set; } = null;
     }
 }

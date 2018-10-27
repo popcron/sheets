@@ -104,7 +104,7 @@ Spreadsheet spreadsheetConverted = new Spreadsheet(raw);
 ```
 
 ## Authorization
-Two ways to authorize are implemented. Using OAuth client id and client secret, or using a provided key from the Google Developer Console.
+Two ways to authorize are implemented. Using OAuth client ID and client secret, or using a provided key from the [Google Developer Console](https://console.developers.google.com/apis/credentials).
 
 <details>
     <summary>Using keys</summary>
@@ -123,7 +123,7 @@ string clientId = "";
 string clientSecret = "";
 Authorizer authorizer = await Authorizer.Authorize(clientId, clientSecret);
 ```
-<details>
+</details>
 
 *NOTE: Modifying calls require OAuth authorization*
 

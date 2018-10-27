@@ -8,8 +8,49 @@ There is also a smaller high level layer on top, which is useful for people who 
 - .NET Framework 4.5
 
 ## Setting up the serializer
-An abstract SheetsSerializer class exists so that you can use any JSON serializer you'd like. To use it with Unity, create a new class, inherit it from the SheetsSerializer class, implement the deserialize and serialize methods using the `JsonUtility` methods.
-Same would apply for Netwonsoft.Json or any other JSON library.
+An abstract SheetsSerializer class exists so that you can use any JSON serializer you'd like.
+
+<details>
+    <summary>Unity serializer</summary>
+    
+```cs
+using UnityEngine;
+
+public class JSONSerializer : SheetsSerializer
+{
+    public override T DeserializeObject<T>(string data)
+    {
+        return JsonUtility.FromJson<T>(data);
+    }
+
+    public override string SerializeObject(object data)
+    {
+        return JsonUtility.ToJson(data);
+    }
+}
+```
+</details>
+
+<details>
+    <summary>Netwonsoft.Json serializer</summary>
+    
+```cs
+using Newtonsoft.Json;
+
+public class JSONSerializer : SheetsSerializer
+{
+    public override T DeserializeObject<T>(string data)
+    {
+        return JsonConvert.DeserializeObject<T>(data);
+    }
+
+    public override string SerializeObject(object data)
+    {
+        return JsonConvert.SerializeObject(data);
+    }
+}
+```
+</details>
 
 ## Example
 The requirements to using the Google Sheets API, is to have the spreadsheetId and an access token. The spreadsheetId can be retrieved from a url.
@@ -23,17 +64,20 @@ public async void Start()
 {
     string spreadsheetId = ""; //TODO: Get your own spreadsheetId
     string token = "";         //TODO: Get your own api token
-    Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token);
+    SheetsSerializer serializer = new SheetsSerializer(); //TODO: Create your own custom serializer/deserializer
+    Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token, serializer);
 
     Debug.Log("URL: " + spreadsheet.URL);
     Debug.Log("Title: " + spreadsheet.Title);
-    Debug.Log("Rows: " + spreadsheet.Sheets[0].Rows);
-    Debug.Log("Columns: " + spreadsheet.Sheets[0].Columns);
     
-    Cell[,] data = spreadsheet.Sheets[0].Data;
-    for (int x = 0; x < spreadsheet.Sheets[0].Columns; x++)
+    Sheet sheet = spreadsheet.Sheets[0];
+    Debug.Log("Rows: " + sheet.Rows);
+    Debug.Log("Columns: " + sheet.Columns);
+    
+    Cell[,] data = sheet.Data;
+    for (int x = 0; x < sheet.Columns; x++)
     {
-        for (int y = 0; y < spreadsheet.Sheets[0].Rows; y++)
+        for (int y = 0; y < sheet.Rows; y++)
         {
             Debug.Log(data[x, y].Value);
         }
@@ -46,8 +90,9 @@ If you'd like to use the low level API, you can use the `GetRaw()` method instea
 If you want to work with both the low level and high level, you can create a raw spreadsheet from the high level spreadsheet by passing it into the constructor. The same can be done for converting a raw sheet to a high level sheet. This can not be done the other way around, and its by design.
 
 ```cs
-SpreadsheetRaw raw = await SpreadsheetRaw.Get(spreadsheetId, token, includeGridData);
-Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token);
+SheetsSerializer serializer = new SheetsSerializer();
+SpreadsheetRaw raw = await SpreadsheetRaw.Get(spreadsheetId, token, serializer, includeGridData);
+Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token, serializer);
 
 //create a new spreadsheet from the raw data
 Spreadsheet spreadsheetConverted = new Spreadsheet(raw);
@@ -72,11 +117,9 @@ No.
  Untested.
 - **What works?**
  The Get method, and most of the high level and low level api.
-- **GetRaw doesn't return any grid data!!**
- Use the optional `includeGridData` parameter.
 - **I'm using the low level API and I don't know what X does?**
 Look at the Google Sheets API, because neither do I.
 - **Can I send pull requests?**
 Sure.
 - **I got an error**
-Send me the steps to reproduce it and I'll fix it.
+Send me the steps to reproduce it and I'll try to fix it.

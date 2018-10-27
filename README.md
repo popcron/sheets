@@ -62,10 +62,12 @@ The API token can be created from the Google API Console, for more info on this,
 ```cs
 public async void Start()
 {
+    SheetsSerializer.Serializer = new SheetsSerializer(); //TODO: Create your own custom serializer/deserializer
     string spreadsheetId = ""; //TODO: Get your own spreadsheetId
-    string token = "";         //TODO: Get your own api token
-    SheetsSerializer serializer = new SheetsSerializer(); //TODO: Create your own custom serializer/deserializer
-    Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token, serializer);
+    string key = "";         //TODO: Get your own key token
+    
+    Authorization authorization = await Authorization.Authorize(key);
+    Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, authorization);
 
     Debug.Log("URL: " + spreadsheet.URL);
     Debug.Log("Title: " + spreadsheet.Title);
@@ -90,13 +92,40 @@ If you'd like to use the low level API, you can use the `GetRaw()` method instea
 If you want to work with both the low level and high level, you can create a raw spreadsheet from the high level spreadsheet by passing it into the constructor. The same can be done for converting a raw sheet to a high level sheet. This can not be done the other way around, and its by design.
 
 ```cs
-SheetsSerializer serializer = new SheetsSerializer();
-SpreadsheetRaw raw = await SpreadsheetRaw.Get(spreadsheetId, token, serializer, includeGridData);
+SheetsSerializer.Serializer = new SheetsSerializer();
+string key = ""; //TODO: Get a key
+Authorization authorization = new Authorization(key);
+
+SpreadsheetRaw raw = await SpreadsheetRaw.Get(spreadsheetId, token, includeGridData);
 Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token, serializer);
 
 //create a new spreadsheet from the raw data
 Spreadsheet spreadsheetConverted = new Spreadsheet(raw);
 ```
+
+## Authorization
+Two ways to authorize are implemented. Using OAuth client id and client secret, or using a provided key from the Google Developer Console.
+
+<details>
+    <summary>Using keys</summary>
+
+```cs
+string key = "";
+Authorizer authorizer = await Authorizer.Authorizer(key);
+```
+</details>
+    
+<details>
+    <summary>Using OAuth</summary>
+    
+```cs
+string clientId = "";
+string clientSecret = "";
+Authorizer authorizer = await Authorizer.Authorize(clientId, clientSecret);
+```
+<details>
+
+*NOTE: Modifying calls require OAuth authorization*
 
 ## FAQ
 - **How do I add this to my unity project?**

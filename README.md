@@ -94,7 +94,7 @@ If you want to work with both the low level and high level, you can create a raw
 ```cs
 SheetsSerializer.Serializer = new SheetsSerializer();
 string key = ""; //TODO: Get a key
-Authorization authorization = new Authorization(key);
+Authorization authorization = await Authorization.Authorize(key);
 
 SpreadsheetRaw raw = await SpreadsheetRaw.Get(spreadsheetId, token, includeGridData);
 Spreadsheet spreadsheet = await Spreadsheet.Get(spreadsheetId, token, serializer);

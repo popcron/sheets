@@ -79,7 +79,7 @@ namespace Popcron.Sheets
         /// <summary>  
         /// Applies one or more updates to the spreadsheet.  
         /// </summary>
-        public async Task<RequestBatchUpdateResponse> BatchUpdate(Request request)
+        public async Task<RequestBatchUpdateResponse> BatchUpdate(RequestBatchUpdate request)
         {
             string address = "https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}:batchUpdate?key={key}";
             address = address.Replace("{spreadsheetId}", spreadsheetId);

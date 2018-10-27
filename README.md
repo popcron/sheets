@@ -14,39 +14,39 @@ Same would apply for Netwonsoft.Json or any other JSON library.
 <details>
     <summary>Unity serializer</summary>
     
-    ```cs
-    public class JSONSerializer : SheetsSerializer
+```cs
+public class JSONSerializer : SheetsSerializer
+{
+    public override T DeserializeObject<T>(string data)
     {
-        public override T DeserializeObject<T>(string data)
-        {
-            return JsonUtility.FromJson<T>(data);
-        }
-
-        public override string SerializeObject(object data)
-        {
-            return JsonUtility.ToJson(data);
-        }
+        return JsonUtility.FromJson<T>(data);
     }
-    ```
+
+    public override string SerializeObject(object data)
+    {
+        return JsonUtility.ToJson(data);
+    }
+}
+```
 </details>
 
 <details>
     <summary>Netwonsoft.Json serializer</summary>
     
-    ```cs
-    public class JSONSerializer : SheetsSerializer
+```cs
+public class JSONSerializer : SheetsSerializer
+{
+    public override T DeserializeObject<T>(string data)
     {
-        public override T DeserializeObject<T>(string data)
-        {
-            return JsonConvert.DeserializeObject<T>(data);
-        }
-
-        public override string SerializeObject(object data)
-        {
-            return JsonConvert.SerializeObject(data);
-        }
+        return JsonConvert.DeserializeObject<T>(data);
     }
-    ```
+
+    public override string SerializeObject(object data)
+    {
+        return JsonConvert.SerializeObject(data);
+    }
+}
+```
 </details>
 
 ## Example

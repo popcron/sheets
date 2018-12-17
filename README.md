@@ -53,7 +53,7 @@ public class JSONSerializer : SheetsSerializer
 </details>
 
 ## Example
-The requirements to using the Google Sheets API, is to have the spreadsheetId and an access token. The spreadsheetId can be retrieved from a url.
+The requirements to using the Google Sheets API, is to have the spreadsheetId and an access token. The spreadsheetId can be retrieved from a url. You will also need to provide the `SheetsSerializer.Serializer` property with your own serializer object.
 
 `https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}`
 
@@ -87,9 +87,9 @@ public async void Start()
 }
 ```
 
-If you'd like to use the low level API, you can use the `GetRaw()` method instead of `Get()`. The raw method alternative will out `SpreadsheetRaw` which is identical to the Google API reference.
+If you'd like to use the low level API, you can use the `GetRaw()` method instead of `Get()`. The raw method alternative will give out a `SpreadsheetRaw` object, which is identical to the Google API reference.
 
-If you want to work with both the low level and high level, you can create a raw spreadsheet from the high level spreadsheet by passing it into the constructor. The same can be done for converting a raw sheet to a high level sheet. This can not be done the other way around, and its by design.
+If you want to work with both the low level and high level, you can create a spreadsheet from the low level spreadsheet by passing it into the constructor. The same can be done for converting a raw sheet to a high level sheet. This can not be done the other way around, and its by design.
 
 ```cs
 SheetsSerializer.Serializer = new SheetsSerializer();
